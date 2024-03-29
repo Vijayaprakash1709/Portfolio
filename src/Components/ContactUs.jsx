@@ -118,7 +118,7 @@ const ContactUs = () => {
               <h1>Leetcode</h1>
               <p>View my Leetcode Profile</p>
               <a
-                href="https://github.com/Vijayaprakash1709"
+                href="https://leetcode.com/vijay1709/"
                 rel="noreferrer"
                 target="_blank"
               >
