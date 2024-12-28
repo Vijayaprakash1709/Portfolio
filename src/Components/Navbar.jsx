@@ -1,327 +1,197 @@
-import backgroundImage from "../Resources/Images/backgroundHome.jpg";
-import DownloadIcon from "@mui/icons-material/Download";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
-import { Link, animateScroll } from "react-scroll";
+import { Link } from "react-scroll";
+import DownloadIcon from "@mui/icons-material/Download";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import backgroundImage from "../Resources/Images/backgroundHome.jpg";
 
 const Navbar = () => {
-  const [colorChange, setColorchange] = useState(false);
-  const [head, setHead] = useState(false);
-  const changeNavbarColor = () => {
-    if (window.scrollY >= 80 || head) {
-      setColorchange(true);
-    } else {
-      setColorchange(false);
-    }
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [colorChange, setColorChange] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const handleScroll = () => {
+    setColorChange(window.scrollY > 80);
   };
-  window.addEventListener("scroll", changeNavbarColor);
 
   useEffect(() => {
-    if (head || colorChange) {
-      setColorchange(true);
-    } else {
-      setColorchange(false);
-    }
-  }, [head, colorChange]);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const menuItems = [
+    { name: "Home", link: "home" },
+    { name: "About", link: "about" },
+    { name: "Skills", link: "skills" },
+    { name: "Projects", link: "projects" },
+    { name: "Contact", link: "contact" },
+  ];
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
   return (
     <Container>
-      <header
-        className="header"
-        style={{ backgroundColor: `${colorChange ? "#cff3fa" : "white"}` }}
-      >
-        <a href="/" className="logo" style={{color:'black',fontWeight:'bold'}}>
-          Vijay - Portfolio
-        </a>
-        <input className="menu-btn" type="checkbox" id="menu-btn" />
-        <label className="menu-icon" htmlFor="menu-btn">
-          <span className="navicon"></span>
-        </label>
-        <ul className="menu">
-          <li>
-            <Link
-              activeClass="active"
-              to="/"
-              onClick={() => animateScroll.scrollToTop()}
-              spy={true}
-              smooth={true}
+      <Nav colorChange={colorChange}  >
+        <Logo>Vijay - PortFolio</Logo>
+        <Hamburger onClick={toggleMenu} style={{marginRight: "50px"}}>
+          {isMenuOpen ? <CloseIcon /> : <MenuIcon />}
+        </Hamburger>
+        <Menu isMenuOpen={isMenuOpen} style={{marginRight: "50px"}}>
+          <Slider activeIndex={activeIndex} />
+          {menuItems.map((item, index) => (
+            <NavItem
+              key={index}
+              active={activeIndex === index}
+              onClick={() => {
+                setActiveIndex(index);
+                setIsMenuOpen(false);
+              }}
+             
             >
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClass="active"
-              to="about"
-              onClick={() => setHead(true)}
-              spy={true}
-              smooth={true}
+              <Link to={item.link} smooth={true} duration={500}>
+                {item.name}
+              </Link>
+            </NavItem>
+          ))}
+          <ResumeLink>
+            <a
+              href="https://drive.google.com/file/d/1L9LB6GWE7l5IPemPcwPM9DLvVYKEjpvA/view?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClass="active"
-              to="skills"
-              onClick={() => setHead(true)}
-              spy={true}
-              smooth={true}
-            >
-              Skills
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClass="active"
-              to="projects"
-              onClick={() => setHead(true)}
-              spy={true}
-              smooth={true}
-            >
-              Projects
-            </Link>
-          </li>
-          <li>
-            <Link
-              activeClass="active"
-              to="contact"
-              onClick={() => setHead(true)}
-              spy={true}
-              smooth={true}
-            >
-              Contact
-            </Link>
-          </li>
-          <li>
-            <div className="resumeBox">
-              <a
-                className="resume"
-                href="https://docs.google.com/document/d/1jprPMNMM1gzgaoGN_ExsHRuQgCGsDfP_/edit?usp=drive_link&ouid=114281987069616319165&rtpof=true&sd=true"
-              >
-                Resume
-                <DownloadIcon />
-              </a>
-            </div>
-          </li>
-        </ul>
-      </header>
+              Resume <DownloadIcon />
+            </a>
+          </ResumeLink>
+        </Menu>
+      </Nav>
     </Container>
   );
 };
 
 const Container = styled.div`
   width: 100%;
-  height: 70px;
   background-image: url(${backgroundImage});
+`;
+
+const Nav = styled.nav`
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${({ colorChange }) => (colorChange ? "#cff3fa" : "white")};
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  padding: 0 20px;
+`;
+
+const Logo = styled.div`
+  font-size: 30px;
+  font-weight: bold;
+  color:rgb(93, 0, 0);
+`;
+
+const Hamburger = styled.div`
+  font-size: 28px;
+  cursor: pointer;
+  color:rgb(4, 17, 20);
+  display: none;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;
+
+const Menu = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  @media (max-width: 768px) {
+    display: ${({ isMenuOpen }) => (isMenuOpen ? "block" : "none")};
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    padding: 10px 0;
+  }
+`;
+
+const Slider = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: ${({ activeIndex }) => `calc(${activeIndex * 20}%)`};
+  width: 20%;
+  height: 5px;
+  background-color:rgb(2, 2, 4);
+  border-radius: 5px;
+  transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  @media (max-width: 768px) {
+    display: none; /* Hide slider in mobile view */
+  }
+`;
+
+const NavItem = styled.div`
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 400;
+  color: ${({ active }) => (active ? "#05095e" : "#05095e")};
+  cursor: pointer;
+  position: relative;
+  padding: 10px;
 
   a {
-    color: #000;
-  }
-
-  /* header */
-
-  .header {
-    position: fixed;
-    width: 100%;
-    z-index: 3;
-    padding-top: 10px;
-  }
-
-  .header ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    overflow: hidden;
-    padding-right: 50px;
-  }
-
-  .header li a {
+    text-decoration: none;
+    color: inherit;
     display: block;
-    padding: 20px 25px;
-    text-decoration: none;
+    padding: 10px 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(115, 40, 5, 0.53);
+      border-radius: 5px;
+      padding:10px;
+    }
   }
 
-  .header .logo {
-    display: flex;
-    float: left;
-    font-size: 2em;
-    padding: 10px 30px;
-    text-decoration: none;
-    color: #343a40;
-  }
-
-  /* menu */
-
-  .header .menu {
-    clear: both;
-    max-height: 0;
-    transition: max-height 0.2s ease-out;
-    text-transform: uppercase;
-    font-size: 15px;
-    font-weight: 700;
-    color: #343a40;
-  }
-
-  li a {
-    color: #343a40;
-  }
-
-  li a:hover {
-    color: #01a479;
-  }
-
-  .header li .resume {
-    width: 80px;
+  @media (max-width: 768px) {
+    font-size: 14px;
     padding: 10px 20px;
-    border-radius: 10px;
-    border: 1px solid #01a479;
-    background: #01a479;
-    color: white;
-    display: flex;
+  }
+`;
+
+const ResumeLink = styled.div`
+  text-align: center;
+  padding: 10px;
+
+  a {
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    padding: 10px 20px;
+    font-size: 14px;
     font-weight: bold;
-    margin-top: 5px;
+    border-radius: 10px;
+    color: white;
+    background-color:rgb(3, 89, 128);
+    text-decoration: none;
+    gap: 5px;
+
+    &:hover {
+      background-color:rgba(3, 102, 148, 0.85);
+    }
   }
 
-  /* menu icon */
-
-  .header .menu-icon {
-    cursor: pointer;
-    display: inline-block;
-    float: right;
-    padding: 28px 20px;
-    position: relative;
-    user-select: none;
-  }
-
-  .header .menu-icon .navicon {
-    background: #333;
+  @media (max-width: 768px) {
     display: block;
-    height: 2px;
-    position: relative;
-    transition: background 0.2s ease-out;
-    width: 18px;
-  }
-
-  .header .menu-icon .navicon:before,
-  .header .menu-icon .navicon:after {
-    background: #333;
-    content: "";
-    display: block;
-    height: 100%;
-    position: absolute;
-    transition: all 0.2s ease-out;
-    width: 100%;
-  }
-
-  .header .menu-icon .navicon:before {
-    top: 5px;
-  }
-
-  .header .menu-icon .navicon:after {
-    top: -5px;
-  }
-
-  /* menu btn */
-
-  .header .menu-btn {
-    display: none;
-  }
-
-  .header .menu-btn:checked ~ .menu {
-    width: 100%;
-    max-height: 450px;
-    background-color: white;
-  }
-
-  .header .menu-btn:checked ~ .menu-icon .navicon {
-    background: transparent;
-  }
-
-  .header .menu-btn:checked ~ .menu-icon .navicon:before {
-    transform: rotate(-45deg);
-  }
-
-  .header .menu-btn:checked ~ .menu-icon .navicon:after {
-    transform: rotate(45deg);
-  }
-
-  .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:before,
-  .header .menu-btn:checked ~ .menu-icon:not(.steps) .navicon:after {
-    top: 0;
-  }
-
-  /* 48em = 768px */
-
-  @media (min-width: 60em) {
-    .header li {
-      float: left;
-    }
-
-    .header li a {
-      padding: 20px 30px;
-    }
-
-    .header .menu {
-      clear: none;
-      float: right;
-      max-height: none;
-    }
-
-    .header .menu-icon {
-      display: none;
-    }
-  }
-
-  @media only screen and (min-width: 769px) and (max-width: 960px) {
-    .header .menu {
-      font-size: small;
-    }
-
-    .resumeBox {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-  }
-
-  @media only screen and (min-width: 481px) and (max-width: 768px) {
-    .resumeBox {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-  }
-
-  @media only screen and (min-width: 320px) and (max-width: 480px) {
-    .resumeBox {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-  }
-
-  @media only screen and (max-width: 320px) {
-    .resumeBox {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-  }
-
-  @media only screen and (max-width: 319px) {
-    .resumeBox {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
+    margin: 10px auto;
   }
 `;
 

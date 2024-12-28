@@ -169,9 +169,9 @@ const ContactUs = () => {
             <div>
               <LocationOnIcon fontSize="large" />
               <h1>Location</h1>
-              <p>Attur,  Tamlinadu</p>
+              <p>Seeliampatty, Attur,  Tamlinadu</p>
               <a
-                href="https://maps.app.goo.gl/LPrp6McS6yGGxpBw8"
+                href="https://maps.app.goo.gl/Zk5UugWyqJBuErTM9"
                 rel="noreferrer"
                 target="_blank"
               >

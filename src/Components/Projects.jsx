@@ -50,9 +50,9 @@ const Projects = () => {
   return (
     <Container id="projects" >
       <h1>Projects</h1>
-      <div className="projectsContainer" >
+      <div className="projectsContainer">
         {projects.map((ele, index) => (
-          <div key={index} className="box" style={{height:'500px'}}>
+          <div key={index} className="box" style={{minHeight:'600px',justifyContent:'center',alignItems:'center'}}>
             <div className="imgBox">
               <img src={ele.img} alt={ele.title} width="100%" />
             </div>
@@ -143,6 +143,7 @@ const Container = styled.div`
   .imgBox > img:hover {
     position: absolute;
     width: 80%;
+    margin-top: -25%;
     transform: scale(1.3);
     transform-origin: 0% 0%;
   }

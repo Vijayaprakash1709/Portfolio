@@ -7,34 +7,37 @@ import signature from "../Resources/Images/signature.png";
 
 const About = () => {
   return (
-    <div id="about">
+    <div id="about" >
       
-      <Container style={{width:'100%'}}>
-        <div className="aboutBox">
-          <div className="about_leftBox" style={{width:'100%'}}>
-            <h1 style={{color:'white'}}>Hi, I'm Vijayaprakash M.</h1>
+      <Container style={{width:'100%',minHeight:'300px',height:'auto'}}>
+        <div className="aboutBox" style={{marginTop:'10px'}}>
+          <div className="about_leftBox" style={{width:'100%',marginTop:'50px'}}>
+            <h1 style={{color:'Yellow'}}>Hi, I'm Vijayaprakash M.</h1>
             {/* <p>
               An enthusiastic Computer Science and Engineer with a strong set of
               technical  as well as non-technical skills and a dedication towards
               creating useful and interactive web applications.
             </p> */}
-            <p>
+            <p style={{color:'white'}}>
             A B.E graduate in the field of Computer Science and Engineering interested in programming and problem solving .And quite interested in playing chess . Proficient at problem solving in C++ . Knowledge about Data structures and Competitive programming. 
 
 And I have secured global rank 1 for two times in Codechef long challenge (Jun and jul 2022) . solved about 250 + problems in leetcode and 100 + problems in Codechef . 1571 rating(max) in Codechef , 1518 rating (max ) in leetcode and 5 star in hackerrank .
 
 Looking forward for SDE intern roles and open to new challenging experience and learning new skills.
             </p>
-            <a href="https://docs.google.com/document/d/1jprPMNMM1gzgaoGN_ExsHRuQgCGsDfP_/edit?usp=sharing&ouid=114281987069616319165&rtpof=true&sd=true">
+            <a href="https://drive.google.com/file/d/1L9LB6GWE7l5IPemPcwPM9DLvVYKEjpvA/view?usp=sharing">
               <button>
                 Download CV
                 <DownloadIcon />
               </button>
             </a>
           </div>
-          <div className="about_rightBox">
-            <div style={{marginTop:'50px'}}>
-              <img src={myImage} alt="" width="100%" />
+          <div style={{height:'10px',marginTop:'10px'}}></div>
+          <div className="about_rightBox" style={{marginTop:'150px'}}>
+            
+            <div style={{marginBottom:'30px',border:'2px solid white'}} >
+             
+              <img  src={myImage} alt="" width="100%" />
             </div>
           </div>
         </div>
@@ -48,7 +51,7 @@ Looking forward for SDE intern roles and open to new challenging experience and 
               Email: <span>vijayaprakash885@gmail.com</span>
             </p>
             <p>
-              Language: <span>English</span>
+              Language: <span>English, Tamil</span>
             </p>
             <p>
               Nationality: <span>Indian</span>
@@ -61,12 +64,13 @@ Looking forward for SDE intern roles and open to new challenging experience and 
             <p>
               I am from <span>Salem ,TamilNadu (India)</span>. I have completed
               my bachelor's in{" "}
-              <span>Computer Science and Engineering</span> from
+              <span>Computer Science and Engineering</span> from  &nbsp;
               <span>
                 Muthayammal Engineering College ,Rasipuram
               </span>
               <br></br>
-               EDUCATION :
+              <b> EDUCATION :</b>
+              
                 <br>
 
                </br>
@@ -88,7 +92,7 @@ RASI MATRIC HIGHER SECONDARY SCHOOL, MALLIAKARAI.	.                             
             </p>
             
             <div>
-              <img src={signature} alt="Umesh_Signature" width="200px" />
+              <img src={signature} alt="Vijay_Signature" width="200px" />
             </div>
           </div>
         </div>
@@ -133,8 +137,8 @@ const Container = styled.div`
   .about_leftBox button {
     padding: 12px 20px 12px 20px;
     border-radius: 10px;
-    border: 1px solid #01a479;
-    background: #01a479;
+    border: 2px solid #01a479;
+    background:rgb(132, 9, 48);
     color: white;
     display: flex;
     align-items: center;
