@@ -29,10 +29,4 @@
 - React-router-dom
 - React-github-calendar
 - Github-calendar
-
-## Deployed Links
-- [Netlify](https://umesh-kumawat.netlify.app)
-
-- [GitHub](https://github.com/Royanosh/portfolio)
-
-
+- 
